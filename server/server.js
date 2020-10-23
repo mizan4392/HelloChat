@@ -9,6 +9,7 @@ const resolvers = require("./graphql/Resolver");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context:ctx=>ctx
 });
 
 

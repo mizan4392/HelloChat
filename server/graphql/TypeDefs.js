@@ -3,9 +3,12 @@ module.exports = gql`
   type User {
     userName: String!
     email: String!
+    token:String
+    createdAt:String
   }
   type Query {
     getUser: [User]!
+    login(userName:String!,password:String!):User!
   }
   type Mutation {
     register(
