@@ -1,24 +1,15 @@
-const { User } = require("../models");
+const { User } = require("../../models");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
 const { UserInputError, AuthenticationError } = require("apollo-server");
-var { JWT_SECRET } = require("../config/env.json");
+var { JWT_SECRET } = require("../../config/env.json");
 
 module.exports = {
   Query: {
-    getUser: async (_, __, context) => {
+    getUser: async (_, __, { user }) => {
       try {
-        let user;
-        if (context.req && context.req.headers.authorization) {
-          const token = context.req.headers.authorization.split("Gard ")[1];
-          jwt.verify(token, JWT_SECRET, (error, decodedToken) => {
-            if (error) {
-              throw AuthenticationError("Unauthorize");
-            }
-            user = decodedToken;
-          });
-        }
+        if (!user) throw new AuthenticationError("Unauthorize");
 
         const users = await User.findAll({
           where: { userName: { [Op.ne]: user.data } },
@@ -30,8 +21,6 @@ module.exports = {
     },
     login: async (_, args) => {
       const { userName, password } = args;
-
-      console.log("------------------------*/", args);
       try {
         let errors = {};
         if (userName.trim() === "")
@@ -70,7 +59,6 @@ module.exports = {
           token,
         };
       } catch (error) {
-        console.log(error);
         throw error;
       }
     },
