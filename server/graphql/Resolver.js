@@ -30,6 +30,8 @@ module.exports = {
     },
     login: async (_, args) => {
       const { userName, password } = args;
+
+      console.log("------------------------*/", args);
       try {
         let errors = {};
         if (userName.trim() === "")
@@ -43,15 +45,15 @@ module.exports = {
         const user = await User.findOne({
           where: { userName },
         });
-        const passMatch = await bcrypt.compare(password, user.password);
-        if (!passMatch) {
-          errors.password = "Wrong Password";
-          throw new AuthenticationError("Wrong Password", { errors });
-        }
-
         if (!user) {
           errors.userName = "User Not Found";
           throw new UserInputError("User Not Found", { errors });
+        }
+
+        const passMatch = await bcrypt.compare(password, user.password);
+        if (!passMatch) {
+          errors.password = "Wrong Password";
+          throw new UserInputError("Wrong Password", { errors });
         }
 
         const token = jwt.sign(
