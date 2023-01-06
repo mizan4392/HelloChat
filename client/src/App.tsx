@@ -4,6 +4,8 @@ import "./App.css";
 import NavBar from "./Components/NavBar/NavBar.component";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { UserContext, UserI } from "./context/UserContext";
+import Login from "./pages/Login/Login.page";
+import Register from "./pages/Register/Register.page";
 
 function App() {
   const [user, setCurrentUser] = useState<UserI | undefined>();
@@ -25,11 +27,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <p>Login</p>, //<Login />,
+      element: <Login />,
     },
     {
       path: "/register",
-      element: <p>Register</p>, //<Register />,
+      element: <Register />,
     },
   ]);
   const setUser = (user: UserI) => {
