@@ -15,8 +15,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
-import { User } from './entities/user.entity';
+import { AuthGuard } from 'src/guards/AuthGuard.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiBody,
@@ -31,19 +30,21 @@ export class UserController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    // return this.userService.create(createUserDto);
+    console.log('createUserDto', createUserDto);
+    return this.userService.createUser(createUserDto);
   }
 
   @ApiOperation({
     summary: 'Fetch Logged-in UserInfo',
   })
-  @ApiOkResponse({
-    type: User,
-  })
+  // @ApiOkResponse({
+  //   type: User,
+  // })
   @Get('get-logged-in-userInfo')
   @UseGuards(AuthGuard)
-  getLoggedInUser(@CurrentUser() user: User) {
-    return this.userService.findByUserId(user.id);
+  getLoggedInUser() {
+    return '';
+    // this.userService.findByUserId(user.id);
   }
 
   @Get()
@@ -63,9 +64,9 @@ export class UserController {
       },
     },
   })
-  @ApiOkResponse({
-    type: User,
-  })
+  // @ApiOkResponse({
+  //   type: User,
+  // })
   @Get('user-by-id')
   @UseGuards(AuthGuard)
   findOne(@Query('userId') userId: string) {
@@ -87,10 +88,10 @@ export class UserController {
   @UseInterceptors(FilesInterceptor('files'))
   update(
     @Body() updateUserDto: UpdateUserDto,
-    @CurrentUser() user,
-    @UploadedFiles() files: Express.Multer.File[] | undefined,
+    // @CurrentUser() user,
+    @UploadedFiles() files: any | undefined,
   ) {
-    return this.userService.update(user?.id, updateUserDto, files);
+    // return this.userService.update(user?.id, updateUserDto, files);
   }
 
   //TODO: add admin validation

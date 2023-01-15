@@ -52,7 +52,9 @@ export class AuthController {
   })
   @Post('login')
   async login(@Body() body: LoginDto) {
-    const user = await this.userService.findByUserNameOrEmail(body.userName);
+    const user: any = await this.userService.findByUserNameOrEmail(
+      body.userName,
+    );
 
     if (!user) {
       throw new BadRequestException(`No user found `);
