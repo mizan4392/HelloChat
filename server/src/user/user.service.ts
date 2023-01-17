@@ -8,8 +8,29 @@ import { UserRepository } from './user.repository';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
+  findUserByUserName(userName: string) {
+    return this.userRepository.finOne({ userName: userName });
+  }
+
+  findUserByEmail(email: string) {
+    return this.userRepository.finOne({ email: email });
+  }
+
   findByUserNameOrEmail(userName?: string, email?: string) {
-    return 'findByUserNameOrEmail';
+    const queryPayload: any = {};
+    if (userName && email) {
+      queryPayload.userName = userName;
+      queryPayload.email = email;
+    } else {
+      if (userName?.length) {
+        queryPayload.userName = userName;
+      }
+      if (email?.length) {
+        queryPayload.email = email;
+      }
+    }
+    console.log('queryPayload', queryPayload);
+    return this.userRepository.finOne(queryPayload);
     // const userQuery = this.userRepo.createQueryBuilder('u');
     // if (userName && email) {
     //   userQuery
@@ -26,13 +47,13 @@ export class UserService {
     // return userQuery.getOne();
   }
 
-  findByUserId(userId) {
-    // return this.userRepo.findOne({
-    //   where: {
-    //     id: userId,
-    //   },
-    // });
-    return 'findByUserId';
+  async findByUserId(userId) {
+    const res = await this.userRepository.finOne({
+      _id: userId,
+    });
+
+    delete res.password;
+    return res;
   }
 
   createUser(userInfo: Partial<CreateUserDto>) {

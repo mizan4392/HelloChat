@@ -7,6 +7,6 @@ export const environment = {
     port: process.env.NX_REDIS_PORT,
   },
   email: {
-    defaultSender: `<no-reply>HelloChat <info@helloChat.com>`,
+    defaultSender: `<no-reply>SocialBook <info@socialBook.com>`,
   },
 };

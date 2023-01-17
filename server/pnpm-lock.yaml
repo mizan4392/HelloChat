@@ -22,11 +22,13 @@ specifiers:
   class-transformer: ^0.5.1
   class-validator: ^0.14.0
   dotenv: ^16.0.3
+  email-validator: ^2.0.4
   eslint: ^8.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   jest: ^27.2.5
   mongoose: ^6.8.2
+  nodemailer: ^6.9.0
   prettier: ^2.3.2
   redis: 3.1.2
   reflect-metadata: ^0.1.13
@@ -42,7 +44,7 @@ specifiers:
   uuid: ^9.0.0
 
 dependencies:
-  '@nestjs-modules/mailer': 1.8.1_7tsmhnugyerf5okgqzer2mfqme
+  '@nestjs-modules/mailer': 1.8.1_xlboh6k7lzqmmy4hcdewvas3lm
   '@nestjs/common': 8.4.7_welcnyot5bzd5wa2aovbkxpi4i
   '@nestjs/core': 8.4.7_tdkocbskemo2uwka4xhsbznrba
   '@nestjs/jwt': 10.0.1_@nestjs+common@8.4.7
@@ -54,7 +56,9 @@ dependencies:
   class-transformer: 0.5.1
   class-validator: 0.14.0
   dotenv: 16.0.3
+  email-validator: 2.0.4
   mongoose: 6.8.2
+  nodemailer: 6.9.0
   redis: 3.1.2
   reflect-metadata: 0.1.13
   rimraf: 3.0.2
@@ -1675,7 +1679,7 @@ packages:
       - supports-color
     dev: false
 
-  /@nestjs-modules/mailer/1.8.1_7tsmhnugyerf5okgqzer2mfqme:
+  /@nestjs-modules/mailer/1.8.1_xlboh6k7lzqmmy4hcdewvas3lm:
     resolution: {integrity: sha512-rNlKzNB+Vr/aRDVcTibj2JCJQcTSE59EBQIpCwh/FkKg0Be1xoF3dQDZ4dmc9X1j396fkIBI5aQ5XAtJNPdxpw==}
     peerDependencies:
       '@nestjs/common': ^7.0.9 || ^8.0.0 || ^9.0.0
@@ -1687,6 +1691,7 @@ packages:
       glob: 8.0.3
       inline-css: 4.0.1
       mjml: 4.13.0
+      nodemailer: 6.9.0
       preview-email: 3.0.5
     optionalDependencies:
       '@types/ejs': 3.1.1
@@ -3523,6 +3528,11 @@ packages:
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
+
+  /email-validator/2.0.4:
+    resolution: {integrity: sha512-gYCwo7kh5S3IDyZPLZf6hSS0MnZT8QmJFqYvbqlDZSbwdZlY6QZWxJ4i/6UhITOJ4XzyI647Bm2MXKCLqnJ4nQ==}
+    engines: {node: '>4.0'}
+    dev: false
 
   /emittery/0.8.1:
     resolution: {integrity: sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==}
@@ -6180,6 +6190,11 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
+  /nodemailer/6.9.0:
+    resolution: {integrity: sha512-jFaCEGTeT3E/m/5R2MHWiyQH3pSARECRUDM+1hokOYc3lQAAG7ASuy+2jIsYVf+RVa9zePopSQwKNVFH8DKUpA==}
+    engines: {node: '>=6.0.0'}
+    dev: false
+
   /nopt/5.0.0:
     resolution: {integrity: sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==}
     engines: {node: '>=6'}
@@ -6531,7 +6546,7 @@ packages:
       dayjs: 1.11.7
       debug: 4.3.4
       mailparser: 3.6.3
-      nodemailer: 6.8.0
+      nodemailer: 6.9.0
       open: 7.4.2
       pug: 3.0.2
       uuid: 8.3.2

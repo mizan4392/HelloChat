@@ -15,7 +15,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from 'src/guards/AuthGuard.guard';
+import { AuthGuard, CurrentUser } from 'src/guards/AuthGuard.guard';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiBody,
@@ -23,6 +23,7 @@ import {
   ApiOperation,
   ApiQuery,
 } from '@nestjs/swagger';
+import { User } from './schema/User.Schema';
 
 @Controller('user')
 export class UserController {
@@ -37,14 +38,13 @@ export class UserController {
   @ApiOperation({
     summary: 'Fetch Logged-in UserInfo',
   })
-  // @ApiOkResponse({
-  //   type: User,
-  // })
+  @ApiOkResponse({
+    type: User,
+  })
   @Get('get-logged-in-userInfo')
   @UseGuards(AuthGuard)
-  getLoggedInUser() {
-    return '';
-    // this.userService.findByUserId(user.id);
+  getLoggedInUser(@CurrentUser() user) {
+    return this.userService.findByUserId(user.id);
   }
 
   @Get()
