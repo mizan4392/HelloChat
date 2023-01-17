@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "../../Components/Button/Button.component";
 import { CORE_API_URL } from "../../utils/environment";
+import { post } from "../../utils/http";
 
 import "./Register.css";
 type Props = {};
@@ -34,6 +35,7 @@ export default function Register({}: Props) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
+
     axios
       .post(`${CORE_API_URL}/auth/register`, registerPayload)
       .then((response) => {
@@ -46,6 +48,7 @@ export default function Register({}: Props) {
       })
       .catch((error) => {
         setLoading(false);
+
         const {
           response: {
             data: { message },

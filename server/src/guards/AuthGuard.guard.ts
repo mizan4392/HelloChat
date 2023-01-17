@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { User } from 'src/user/schema/User.Schema';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +18,6 @@ export class AuthGuard implements CanActivate {
     const token = request.headers['authorization'];
 
     if (token) {
-      console.log('token', token);
       const parts = token.split(' ');
 
       if (parts?.length === 2) {
@@ -33,12 +33,12 @@ export class AuthGuard implements CanActivate {
   }
 }
 
-// const CurrentUserDecorator = createParamDecorator(
-//   (data: unknown, context: ExecutionContext): User => {
-//     const request = context.switchToHttp().getRequest();
-//     const user = request.user as User;
-//     return user;
-//   },
-// );
+const CurrentUserDecorator = createParamDecorator(
+  (data: unknown, context: ExecutionContext): User => {
+    const request = context.switchToHttp().getRequest();
+    const user = request.user as User;
+    return user;
+  },
+);
 
-// export const CurrentUser = () => CurrentUserDecorator();
+export const CurrentUser = () => CurrentUserDecorator();

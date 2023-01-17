@@ -24,6 +24,7 @@ import { UserService } from 'src/user/user.service';
 import { generateOtp, getOtpData } from 'src/utils/common';
 import { AuthService } from './auth.service';
 import { ApiConfirmRegistration, LoginDto, RegisterDto } from './dto/auth.dto';
+import * as EmailValidator from 'email-validator';
 
 @Controller('auth')
 export class AuthController {
@@ -52,9 +53,7 @@ export class AuthController {
   })
   @Post('login')
   async login(@Body() body: LoginDto) {
-    const user: any = await this.userService.findByUserNameOrEmail(
-      body.userName,
-    );
+    const user: any = await this.userService.findUserByUserName(body.userName);
 
     if (!user) {
       throw new BadRequestException(`No user found `);
@@ -69,7 +68,7 @@ export class AuthController {
 
     const payload = {
       userName: user.userName,
-      id: user.id,
+      id: user._id,
     };
 
     return {
@@ -85,15 +84,20 @@ export class AuthController {
   })
   @Post('register')
   async registration(@Body() body: RegisterDto) {
+    body.userName = body.userName.trim().toLocaleLowerCase();
     //find existing user with email & userName
-    const existUser = await this.userService.findByUserNameOrEmail(
-      body.userName.trim(),
+    const userByUserName = await this.userService.findUserByUserName(
+      body.userName,
+    );
+    const userByEmail = await this.userService.findUserByEmail(
       body.email.trim(),
     );
+
     //if exist throw conflict error
-    if (existUser) {
+    if (userByUserName || userByEmail) {
       throw new ConflictException('User Already exist');
     }
+
     const code = await generateOtp({
       key: 'registration',
       data: body,
@@ -102,8 +106,8 @@ export class AuthController {
     try {
       await this.emailService.sendEmail({
         to: body.email,
-        subject: `[SocialBook] : ${code} is your pin.`,
-        body: `Your pin for signing up to SocilBook is ${code} , it will expire after 5 minutes.`,
+        subject: `[HelloChat] : ${code} is your pin.`,
+        body: `Your pin for signing up to HelloChat is ${code} , it will expire after 5 minutes.`,
       });
       return true;
     } catch (e) {
@@ -131,7 +135,7 @@ export class AuthController {
     const { pin } = body;
 
     const data = await getOtpData({ key: 'registration', code: pin });
-    console.log('data', data);
+
     if (data) {
       //else :
       //hash password

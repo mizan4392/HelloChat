@@ -14,7 +14,7 @@ export class EmailService {
   constructor(private mail: MailerService) {}
   async sendEmail(config: SendEmailI) {
     const { from, to, subject, body, attachments } = config;
-    console.log(from, to, subject, body);
+
     await this.mail
       .sendMail({
         to,
