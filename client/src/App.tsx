@@ -12,6 +12,7 @@ import Login from "./pages/Login/Login.page";
 import Register from "./pages/Register/Register.page";
 import { get } from "./utils/http";
 import { ToastContainer } from "react-toastify";
+import Messenger from "./pages/messenger/Messenger.page";
 
 function App() {
   const [user, setCurrentUser] = useState<UserI | undefined>();
@@ -79,7 +80,7 @@ const Layout = () => {
   return (
     <>
       <NavBar />
-      <div className="flex">Layout</div>
+      <Messenger />
     </>
   );
 };
