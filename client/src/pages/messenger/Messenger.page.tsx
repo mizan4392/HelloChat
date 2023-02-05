@@ -13,6 +13,10 @@ export default function Messenger() {
       </div>
       <div className="chatOnline flex-[3] p-[10px] h-full">
         <ChatOnline />
+        <ChatOnline />
+        <ChatOnline />
+        <ChatOnline />
+        <ChatOnline />
       </div>
     </div>
   );
