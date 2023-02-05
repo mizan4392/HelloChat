@@ -9,6 +9,9 @@ import { environment } from './environment/environment';
 import { LocalStorageService } from './storage.service';
 import { UserModule } from './user/user.module';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MessageModule } from './message/message.module';
+import { ConversationModule } from './conversation/conversation.module';
+import { JwtModule } from '@nestjs/jwt';
 @Global()
 @Module({
   imports: [
@@ -35,8 +38,11 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         };
       },
     }),
+
     UserModule,
     AuthModule,
+    MessageModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [AppService, LocalStorageService, EmailService],
